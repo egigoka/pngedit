@@ -5,7 +5,7 @@ import PIL
 
 
 class State:
-    json_file = "pngwork.json"
+    json_file = "picsedit.json"
 
 
 class JsonLocal:
