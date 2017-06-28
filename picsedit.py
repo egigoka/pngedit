@@ -27,8 +27,10 @@ JsonLocal.load()
 
 
 class ImageCurrent:
+    color_depth = 255
     width = None
     height = None
+    pixels_list = []
     size = [width, height]
 
     @classmethod
@@ -54,12 +56,44 @@ class ImageCurrent:
         cls.height = height
         cls.consist()
 
-class PixelsCurrent:
-    pass
-    
+    @classmethod
+    def create_random_pixels(cls):
+        len_of_list = cls.width * cls.height
+        cnt = 0
+        cls.pixels_list = []
+        while cnt< len_of_list:
+            cnt += 1
+            rand_r = Random.integer(0, cls.color_depth)
+            rand_g = Random.integer(0, cls.color_depth)
+            rand_b = Random.integer(0, cls.color_depth)
+            rand_a = Random.integer(0, cls.color_depth)
+            pixel_typle = (rand_r, rand_g, rand_b, rand_a)
+            cls.pixels_list.append(pixel_typle)
 
-ImageCurrent.set_width(3)
-ImageCurrent.set_height(3)
+    @classmethod
+    def create_rainbow_pixels(cls):  # didn't work yet
+        len_of_list = cls.width * cls.height
+        cnt = 0
+        cls.pixels_list = []
+        rand_r =
+        while cnt< len_of_list:
+            cnt += 1
+            if rand_r == 256:
+                rand_r = 0
+            else:
+                rand_r += 1
+            rand_r = Random.integer(0, cls.color_depth)
+            rand_g = Random.integer(0, cls.color_depth)
+            rand_b = Random.integer(0, cls.color_depth)
+            rand_a = Random.integer(0, cls.color_depth)
+            pixel_typle = (rand_r, rand_g, rand_b, rand_a)
+            cls.pixels_list.append(pixel_typle)
+
+
+
+
+ImageCurrent.set_width(100)
+ImageCurrent.set_height(100)
 
 
 image = Image.open(State.image_input)
@@ -67,6 +101,9 @@ debug_print("image.mode", image.mode, "image.size", image.size)
 image_out = Image.new(image.mode,ImageCurrent.size)
 
 pixels = list(image.getdata())
+ImageCurrent.create_random_pixels()
+ImageCurrent.create_rainbow_pixels()
+pixels = ImageCurrent.pixels_list
 debug_print("pixels", pixels)
 #pixels.pop()
 debug_print("pixels", pixels)
@@ -84,3 +121,4 @@ cnt =0
 image_out.putdata(pixels)
 
 image_out.save(State.image_output)
+image_out.show()
